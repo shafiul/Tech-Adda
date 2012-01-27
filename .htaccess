@@ -1,0 +1,6 @@
+Options -Indexes
+RewriteEngine on
+#RewriteCond $1 !^(index\.php|images|3rdparty|templates|robots\.txt|Sitemap\.xml|feed\.rss)
+
+# General pages
+RewriteRule ^([a-zA-Z0-9_]+)$ index.php?page=$1 [QSA,L]

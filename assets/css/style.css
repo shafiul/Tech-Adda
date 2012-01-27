@@ -1,0 +1,38 @@
+/* 
+    Document   : style
+    Created on : Jan 26, 2012, 2:50:08 AM
+    Author     : hirayami
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+label.error{
+    display:inline-block;
+    clear: both;
+    padding: 3px 10px;
+
+    color: #b94a48;
+    background-color: #fce6e6;
+    border-color: #b94a48;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    -moz-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+}
+
+.actions.transparent{
+    background-color: transparent;
+}
+
+table form, table form fieldset{
+    margin: 0;
+    padding: 0;
+}
+
+form.inlineForm{
+    display: inline;
+}
