@@ -69,11 +69,20 @@
 
 
                             </span> | <a href="<?php ViewHelper::url('?page=logout') ?>">Logout</a>
-<?php else: ?>
-                            <a href="<?php ViewHelper::url('?page=login') ?>">
-                                <img width="150px" height="26px" src="<?php ViewHelper::url('assets/images/google_signin.png') ?>" alt="Sign in with Google">
-                            </a>
-<?php endif; ?>
+                        <?php else: ?>
+                            <table class="thin_table" >
+                                <tr>
+                                    <td>
+                                        <?php echo Twitter::GetLoginButton(); ?>
+                                    </td><td>
+                                        <a href="<?php ViewHelper::url('?page=login') ?>">
+                                            <img width="150px" height="26px" src="<?php ViewHelper::url('assets/images/google_signin.png') ?>" alt="Sign in with Google">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        <?php endif; ?>
                     </span>
 
                 </div>
@@ -90,4 +99,4 @@
                 <div class="row">
 
                     <div id="main-content" class="span10">
-<?php ViewHelper::flushMessage(); ?>
+                        <?php ViewHelper::flushMessage(); ?>

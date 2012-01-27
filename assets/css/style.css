@@ -36,3 +36,11 @@ table form, table form fieldset{
 form.inlineForm{
     display: inline;
 }
+
+.thin_table{
+    margin: 0;
+}
+
+.thin_table td{
+    padding: 0px;
+}

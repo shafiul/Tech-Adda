@@ -5,12 +5,13 @@ class AddTalk extends Controller {
     function index() {
 
 //        ViewHelper::NicePrint($_POST);
-//        ViewHelper::printAsArray($_POST);
+        //ViewHelper::printAsArray($_POST);
+        //exit;
         //---- validation-----
         $this->authenticateUser();
 
-
         $eventId;
+
         if (!empty($_POST)) {
 
             $_SESSION['POST'] = $_POST;
@@ -19,6 +20,7 @@ class AddTalk extends Controller {
             $validator->requiredElements = array('title', 'summary', 'speaker', 'eventId');
             $validator->optionalElements = array('slideLink');
             $result = $validator->prepare();
+
 
             $eventId = $result['eventId'];
 
@@ -30,10 +32,11 @@ class AddTalk extends Controller {
 
             if ($validator->error != NULL) {
                 $errorMsg[] = $validator->error;
+                $this->msgExit($validator->error, E_ERROR);
             } else {
 
-                if (!$validator->IsInteger($result['eventId']))
-                    $errorMsg[] = "Invalid Event.";
+//                if (!$validator->IsInteger($result['eventId']))
+//                    $errorMsg[] = "Invalid Event.";
 
                 if (!$validator->CheckSize($result['title'], 5, 180))
                     $errorMsg[] = "Invalid Title.Minimum 5 letter and maximmum 180 letter";
@@ -55,10 +58,17 @@ class AddTalk extends Controller {
 
             //----------------------Validations End----------------------------
 
-            $sucessUrl = '?page=event&id=' . $result['eventId'];
+            $result['event_id'] = $result['eventId'];
+            $result['slide_link'] = $result['slideLink'];
+            unset($result['eventId']);
+            unset($result['slideLink']);
+
+
+            $sucessUrl = '?page=event&id=' . $eventId;
+            $failUrl = '?page=addTalk&eventId=' . $eventId;
             if (!empty($errorMsg)) {
                 $errorMsg = implode("<br />", $errorMsg);
-                $this->setMsg($errorMsg, MSG_ERROR);
+                $this->setMsg($errorMsg, MSG_ERROR, $failUrl);
                 //$this->msgExit($errorMsg, MSG_ERROR);
             } else {
                 $result['event_id'] = $result['eventId'];
@@ -74,10 +84,12 @@ class AddTalk extends Controller {
             $eventId = $this->input('id');
         }
 
+        $data['eventId'] = $eventId;
         $data['event'] = App::getRepository('Event')->getEventById($eventId);
 
         $data['js'] = array('js/jquery-validate.js', 'js/jquery-validate-extra.js');
-        $data['talkAction'] = '?page=addTalk';
+        $data['talkAction'] = "?page=addTalk";
+
         $this->loadView('addTalk', $data);
     }
 

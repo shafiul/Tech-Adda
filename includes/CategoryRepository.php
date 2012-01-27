@@ -33,7 +33,7 @@ class CategoryRepository extends Model
     }
     
     function delete($data){
-        return $this->remove($data);
+        return $this->remove($this->recursiveEscape($data));
     }
     
     

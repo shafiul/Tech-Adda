@@ -5,18 +5,20 @@ class Event extends Controller {
     function index() {
 
         $validator = new FormValidation($this);
+        
 
-        $validator->optionalElements = array('mode');
+        $validator->optionalElements = array('mode', 'modeId');
         $result = $validator->prepare();
 
         $id;
         if ($result['mode'] == 'event') {
-            $this->addComment();
+            $this->addComment();            
             $id = $result['modeId'];
         } else {
 //            die('ehe');
             $id = $this->input('id');
         }
+
 
 
 
@@ -28,24 +30,29 @@ class Event extends Controller {
         $userId = ($user) ? ($user['user_id']) : (0);
 
         $data['isAttending'] = App::getRepository('Attendee')->isUserAttendingEvent($userId, $id);
-        
+
         $successUrl = "?page=event&id=$id";
         $pageNo = $this->input("pageNo", "", false, 1);
         $start = ($pageNo - 1) * PAGINATION_LIMIT;
-        $result = App::getRepository('Comments')->getCommentsByTalk($id, $start, PAGINATION_LIMIT);
+        $result = App::getRepository('Comments')->getCommentsByEvent($id, $start, PAGINATION_LIMIT);
         $data['comments'] = $result['result'];
         $totalComments = $result['num_rows'];
         $data['paginationHtml'] = ViewHelper::getPagination($totalComments, $successUrl, PAGINATION_LIMIT, $pageNo);
 
+
+//        var_dump($data['comments']);
         // who's attending
         $whosAtt = $this->whosAttending($id);
-//        var_dump($whosAtt);
-//        exit();
+
         // Prepare view
         $data['gravatarURLs'] = $whosAtt;
         $data['sidebars'] = array('gravatar');
 
-        $data['js'] = array('js/jquery-validate.js', 'js/jquery-validate-extra.js', 'js/jquery-rating.js');
+        $data['js'] = array(
+            'js/jquery-validate.js',
+            'js/jquery-validate-extra.js',
+            'js/jquery-rating.js'
+        );
         $data['css'] = array('css/jquery-rating.css');
 
         $this->loadView('event', $data);

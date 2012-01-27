@@ -28,6 +28,8 @@ class TalksRepository extends Model
     
     public function create($data)
     {        
+
+        //$data['user_id'] = $_SESSION['user']['user_id'];
         $data = $this->recursiveEscape($data);
         $this->insert($data);
         return $this->db->insert_id;

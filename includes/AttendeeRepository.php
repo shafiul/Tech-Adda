@@ -23,7 +23,7 @@ class AttendeeRepository extends Model {
      * @param type $userid 
      */
     public function attendingWhat($userid) {
-        $attendies = $this->get(array('user_id' => $userid));
+        $attendies = $this->get($this->recursiveEscape(array('user_id' => $userid)));
         $attendanceResult = array();
 
         foreach ($attendies as $row) {
@@ -34,7 +34,7 @@ class AttendeeRepository extends Model {
 
     public function isUserAttendingEvent($userId, $eventId) {
         $result = $this->get(
-                array('user_id' => $userId, 'event_id' => $eventId)
+        $this->recursiveEscape(array('user_id' => $userId, 'event_id' => $eventId))
         );
         if(empty($result))
             return false;
@@ -44,7 +44,7 @@ class AttendeeRepository extends Model {
     
     public function whosAttending($eventId){
 //        $attendees = $this->get(array('event_id' => $eventId),-1,0,'user',array('users.user_id' => 'attendees.user_id'));
-        $attendees = $this->get(array('event_id' => $eventId));
+        $attendees = $this->get($this->recursiveEscape(array('event_id' => $eventId)));
 //        var_dump($attendees);
 //        exit();
         $emails = array();
@@ -52,7 +52,7 @@ class AttendeeRepository extends Model {
         $userRep = App::getRepository('User');
         
         foreach($attendees as $i){
-            $user = $userRep->get(array('user_id' => $i['user_id']));
+            $user = $userRep->get($this->recursiveEscape(array('user_id' => $i['user_id'])));
             $emails[] = $user[0]['email'];
         }
 //        var_dump($emails);

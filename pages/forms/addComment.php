@@ -1,5 +1,5 @@
 <div >
-    <form id="commentForm" class="validationForm" action="<?php echo BASE_URL . '?page=' . ($mode == 'talk' ? 'talk' : 'event') . '&id=' . $modeId; ?>" method="post">
+    <form id="commentForm"  class="validationForm" action="<?php echo BASE_URL . '?page=' . ($mode == 'talk' ? 'talk' : 'event') . '&id=' . $modeId; ?>" method="post">
         <fieldset>
 
             <div class="clearfix">
@@ -31,18 +31,23 @@
     </form>
     <script type="text/javascript">
         $('#commentForm').submit(function(){
-            var stars = $('input.star');
-            var rating=0;
-            var i;
-            for(i=4;i>=0; i--){
-                if($(stars[i]).attr('checked') != undefined){
-                    $('input[name="rating"]').attr('value', i+1);
-                    $('input[name="rating"]').value(i+1);
-                    break;
+            try{
+                var stars = $('input.star');
+                var rating=0;
+                var i;
+                for(i=4;i>=0; i--){
+                    if($(stars[i]).attr('checked') != undefined){
+                        $('input[name="rating"]').attr('value', i+1);
+//                        $('input[name="rating"]').value(i+1);
+                        break;
+                    }
                 }
+            }catch(e){
+                console.log(e);
+                return false;   
             }
             
-            return false;
+            return true;
         });
     </script>
 </div>

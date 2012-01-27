@@ -95,10 +95,11 @@ MSG;
     }
   
     public static function getPagination($numItems,$url,$perPage,$curPage=1) {        
+        
         $paginationHtml = "<div class='pagination'><ul>";
         $numPages=ceil(floatval($numItems)/$perPage);                
         for($i=1;$i<=$numPages;++$i)
-        {
+        {            
             if($i==$curPage)
                 $paginationHtml .= "<li class='active'><a href='javascript:void(0);'>$i</a></li>";                
             else

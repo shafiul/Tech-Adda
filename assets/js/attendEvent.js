@@ -13,6 +13,9 @@ $('input.attendButton').click(function(){
             if(response[0] == true){
                 $('#attendButton'+eventId).parent().append('<a class="btn success" href="#">You Attending</a>');
                 $('#attendButton'+eventId).hide();
+                var att = $('#attendButton'+eventId).parent().find('strong');
+                var newAtt = parseInt(att.html().replace('attending',''));
+                att.html((newAtt + 1) + ' Attending');
             }else{
                 $('#attendButton'+eventId).attr('value', 'Try again');
             }

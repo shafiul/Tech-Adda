@@ -22,6 +22,20 @@ class UserRepository extends Model
         $filters = $this->recursiveEscape($filters);
         return $this->get($filters,0,1);
     }
+    public function getUserByName($name){
+        $filters = array(
+            'name'=> $name
+        );          
+        $filters = $this->recursiveEscape($filters);
+        return $this->get($filters,0,1);
+    }
+    public function getUesrByTwitterId($twitterId){
+        $filters = array(
+            'twitter_id'=> $twitterId
+        );          
+        $filters = $this->recursiveEscape($filters);
+        return $this->get($filters,0,1);
+    }
 
     public function create($email) {
         
@@ -33,6 +47,15 @@ class UserRepository extends Model
         return $this->insert($data);
     }
     
+    public function createByName($name,$twitterId){
+        $data = array(
+            'name' => $name,
+            'twitter_id'=>$twitterId
+            );
+        $data = $this->recursiveEscape($data);
+        
+        return $this->insert($data);
+    }
     
     public function updateUsername($usrename,$userId){
         $result = $this->update(array('user_id' => $userId), array('name' => $usrename));

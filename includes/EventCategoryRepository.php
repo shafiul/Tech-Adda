@@ -20,14 +20,19 @@ class EventCategoryRepository extends Model
     
     public function insertAll($catArr,$eventID){
         foreach($catArr as $catID){
-            $data = $this->recursiveEscape($data);
+            $data = $this->recursiveEscape(
+                    array(
+                        'category_id' => $catID,
+                        'event_id' => $eventID
+                    )
+                    );
             $this->insertIfNotExists($data);
         }
     }
     
     
     public function getEventsByCatId($catId){
-        $events =  $this->get(array('category_id' => $catId));
+        $events =  $this->get($this->recursiveEscape(array('category_id' => $catId)));
         
 //        var_dump($events);
 //        exit();
@@ -39,9 +44,9 @@ class EventCategoryRepository extends Model
         foreach($events as $eventId){
 //            var_dump($eventId);
 //            exit();
-            $event = $eventRepo->get(array(
+            $event = $eventRepo->get($this->recursiveEscape(array(
                 'event_id' => $eventId['event_id']
-            ));
+            )));
 //            var_dump($event[0]);
             if(isset($event[0]))
                 $eventsArr[] = $event[0];

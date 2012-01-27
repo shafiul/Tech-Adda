@@ -18,7 +18,7 @@ $(document).ready(function(){
     
     //initiating form validation
     if($('.validationForm').length>0){
-//        $('.validationForm').validate();
+        $('.validationForm').validate();
     }
     
     //sort the sortable tables

@@ -6,6 +6,7 @@ class AddEvent extends Controller {
         // validation
         $this->authenticateUser();
 
+
         if (!empty($_POST)) {
 
             $_SESSION['POST'] = $_POST;
@@ -17,12 +18,18 @@ class AddEvent extends Controller {
 //        $validator->optionalElements = array('summary');
             $result = $validator->prepare();
             
-
-//            var_dump($result['category_ids']);
-//            exit();
-
-            if ($validator->error) {
-                $this->setMsg($validator->error, MSG_ERROR);
+            $errors = array();
+            
+            if($validator->error)
+                $errors[] = $validator->error;
+            
+            if(!$validator->IsWebsiteValid($result['href'])){
+                $errors[] = 'Link not valid!';
+            }
+            
+ 
+            if (!empty($errors)) {
+                $this->setMsg(implode('<br/>', $errors), MSG_ERROR);
             } else {
 
                 // file validation
@@ -45,7 +52,7 @@ class AddEvent extends Controller {
 
                     $catsArr = $result['category_ids'];
                     unset($result['category_ids']);
-                    
+
                     $eventId = App::getRepository('Event')->create($result);
                     // handle categories
 
@@ -62,7 +69,10 @@ class AddEvent extends Controller {
 
         // Prepare View
 
-        $data['js'] = array('js/jquery-validate.js', 'js/jquery-validate-extra.js');
+        $data['js'] = array(
+            'js/jquery-validate.js',
+            'js/jquery-validate-extra.js'
+        );
         $this->loadView('addEvent', $data);
     }
 

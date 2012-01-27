@@ -35,14 +35,6 @@
 
 <p class="align-justify"><?php echo nl2br($event['summary']) ?></p>
 <p><strong>Event Link:</strong> <br /><a href="<?php echo $event['href'] ?>"><?php echo $event['href'] ?></a></p>
-=======
-<div class="span2" style="padding: 10px 0 10px 10px;">
-    <?php if (!empty($event['logo'])): ?>
-        <img width="90" height="90" src="<?php echo $event['logo'] ?>" />
-    <?php else: ?>
-        <img src="http://placehold.it/90x90" />
-    <?php endif; ?>
-</div>
 
 <h3>Talks</h3>
 <ul>

@@ -3,6 +3,7 @@
 $pathinfo = pathinfo($_SERVER['PHP_SELF']);
 $baseurl = $pathinfo['dirname'] . '/';
 define('BASE_URL', $baseurl);
+define('IMAGE_URL',BASE_URL."/assets/images");
 
 
 define('MSG_SUCCESS', 'success');
@@ -27,6 +28,6 @@ define('NICE_URL_ENABLED', true);
 
 define('CONSUMER_KEY', "oxcmzZq1ozaNqEuc26jLBA");
 define('CONSUMER_SECRET', "q3kpDSWcrhaSmqk7bZv8VNYwJHT7X20zQzV9v3rEI");
-define('OAUTH_CALLBACK', BASE_URL);
+define('OAUTH_CALLBACK', "http://localhost".BASE_URL."?page=login&loginType=twitter");
 
 ?>

@@ -34,11 +34,16 @@ class CommentsRepository extends Model
         $filters = $this->recursiveEscape($filters);
         
         $data['result'] = $this->get($filters,$start,$limit,$joinRepo,$joinCond);        
-        $data['num_rows'] = $this->getTotalCommentsCountByTalk($eventId);
+        $data['num_rows'] = $this->getTotalCommentsCountByEvent($eventId);
         return $data;
     }
     public function getTotalCommentsCountByTalk($talkId){
         $filters = array('talk_id'=>$talkId);
+        return $this->getCount($filters);
+        
+    }
+    public function getTotalCommentsCountByEvent($eventId){
+        $filters = array('event_id'=>$eventId);
         return $this->getCount($filters);
         
     }

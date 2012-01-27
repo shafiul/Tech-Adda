@@ -1,4 +1,4 @@
-<form  class="validationForm" action="<?php echo BASE_URL . '?page=addTalk'; ?>" method="post">
+<form  class="validationForm" action="<?php echo BASE_URL . '?page=addTalk&eventId='.$eventId; ?>" method="post">
     <fieldset>
         <legend>Add a talk</legend>
         <div class="clearfix">
